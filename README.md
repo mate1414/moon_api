@@ -2,8 +2,8 @@
 
 ### 1.Клонирование репозитория
 ```bash
-git clone git@github.com:mate1414/moon_api.git
-cd ../moon_api
+git clone git@github.com:mate1414/organizations_api.git
+cd ../organizations_api
 ```
 
 ### 3. Соберите и запустите все компоненты

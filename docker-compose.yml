@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${DB_USER:-moon}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-moon}
+      POSTGRES_DB: ${DB_NAME:-moon}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      SECRET_KEY: dev
+      STATIC_API_KEY: dev
+      SQLALCHEMY_DATABASE_URL: postgresql://moon:moon@db:5432/moon
+    depends_on:
+      - db
+    command: >
+      sh -c "alembic upgrade head && 
+             uvicorn app.main:app --host 0.0.0.0 --port 8000"
+
+volumes:
+  postgres_data:
